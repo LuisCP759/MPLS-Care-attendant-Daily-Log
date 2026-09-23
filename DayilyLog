@@ -1,0 +1,686 @@
+
+
+/*--------------------------------------------
+Program 3: MPLS care attendant Daily Log
+The MPLS care attendant Daily Dog Log is a program that allows the care attendant manager to  enter daily logs for each Dog in MPLS Dog boarding School.  
+Listed below is a chart with the name of each care attendant and the name of each dog in their care.  The program allows the care attendant to continuously 
+enter their id# and enter the total amount of time spent with the dog and a general note about the dog's day. Once the care attendant id # is entered, the care attendant
+will be prompted to select the dogs who fall under their care.  For each dog entered, The program provides a summary of all entered information for a dog. The program should enforce that only care attendants with the id numbers listed in the chart below can be entered.    
+
+Once the manager is done entering all logs, the program will display a count of total dogs entered, a count of the total number of dogs entered from each 
+color group, along with the total time the care attendant spent with the various dogs. The program also provides you with a summary of the dog with the most care minutes.
+
+**ARRAYS CANNOT BE USED FOR THIS PROGRAM**
+
+| ID # | Care Attendant Name | Assigned Color Group|
+|------|---------------------|---------------------|
+| 11   | Noah Charles        |  BLUE, RED          |
+| 22   | Silas Alexander     |  GREEN, YELLOW      |
+| 33   | Chris Isaac         |  BLUE, YELLOW       |                               
+| 44   | Mya Lynn            |  RED, GREEN         |
+
+
+**** List of dogs currently in care
+| ID # | Dog Name | Dogs in Care                                         |
+|-------|------------|----------|
+| 348   | Badger    | RED      |
+| 301   | Hoosier   | RED      |
+| 325   | Spartan   | GREEN    |
+| 388   | Hawk      | YELLOW   |
+| 333   | Gopher    | YELLOW   |
+| 388   | Husker    | RED      |
+| 391   | Bucky     | RED      |
+| 362   | Nittany   | BLUE     |
+| 311   | Wolvey    | BLUE     |
+	
+    [REPLACE MY INFORMATION WITH YOURS]
+    Course: COMP 170, Spring 1 2025
+    System: Visual Studio Code, Windows 10
+    Author: C. F
+ */
+import java.util.Scanner;
+
+public class DayilyLog {
+
+    public static void main(String[] args) throws Exception {
+
+        // constant variables final int and string 
+        // These values do not change while the program is running.
+        // Care Attendant IDs
+        final int NOAH_ID = 11;
+        final int SILAS_ID = 22;
+        final int CHRIS_ID = 33;
+        final int MYA_ID = 44;
+
+        // Sentinel value used to end the program
+        final int SENTINEL = 0;
+
+        // Dog IDs
+        final int BADGER_ID = 348;
+        final int HOOSIER_ID = 301;
+        final int SPARTAN_ID = 325;
+        final int HAWK_ID = 388;
+        final int GOPHER_ID = 333;
+        final int HUSKER_ID = 388;
+        final int BUCKY_ID = 391;
+        final int NITTANY_ID = 362;
+        final int WOLVEY_ID = 311;
+
+        // Color groups
+        final String RED = "RED";
+        final String BLUE = "BLUE";
+        final String GREEN = "GREEN";
+        final String YELLOW = "YELLOW";
+
+        // Variables to use later in the loop and if statements 
+        // start from zero to get all the values intserted 
+        int userID = 0;
+        int dogID = 0;
+        int dogMinutes = 0;
+
+        String attendantName = "";
+        String colorGroup1 = "";
+        String colorGroup2 = "";
+
+        String dogName = "";
+        String dogColor = "";
+        String notesTaken = "";
+
+        // variables to use later to add count in the loop 
+        // Start all counters at zero.
+        int totalDogs = 0;
+
+        int redCount = 0;
+        int blueCount = 0;
+        int greenCount = 0;
+        int yellowCount = 0;
+
+        int redMinutes = 0;
+        int blueMinutes = 0;
+        int greenMinutes = 0;
+        int yellowMinutes = 0;
+
+        //total amount of minutes per dog care 
+        // Used to determine which dog received the most care.
+        int badgerMinutes = 0;
+        int hoosierMinutes = 0;
+        int spartanMinutes = 0;
+        int hawkMinutes = 0;
+        int gopherMinutes = 0;
+        int huskerMinutes = 0;
+        int buckyMinutes = 0;
+        int nittanyMinutes = 0;
+        int wolveyMinutes = 0;
+
+        // Variables used to track dog with most care minutes
+        String mostCareDog = "";
+        int mostCareMinutes = 0;
+        int currentDogTotalMinutes = 0;
+
+        // scanner started 
+        Scanner scanner = new Scanner(System.in);
+
+        // Welcome message for attendant 
+        System.out.println(
+                "Welcome to the MPLS Care Attendant Daily Log Program."
+        );
+
+        System.out.println(
+                "This program allows the manager to enter daily dog logs."
+        );
+
+        System.out.println();
+
+        // informaton care attendant can see to access the portal 
+        System.out.println("Enter 11 for Noah Charles");
+        System.out.println("Enter 22 for Silas Alexander");
+        System.out.println("Enter 33 for Chris Isaac");
+        System.out.println("Enter 44 for Mya Lynn");
+        System.out.println("Enter 0 when finished.");
+
+        System.out.println();
+
+        // Ask for first attendant ID before entering the loop.
+        System.out.print("Please enter care attendant ID: ");
+        userID = scanner.nextInt();
+
+        // MAIN LOOP - very confusing nothing works if this loop is not properly indented 
+        // Continue entering dog logs until user enters 0.
+        // exit should be prioritize here not on the end of the loop 
+        while (userID != SENTINEL) {
+
+            // Reset attendant information for each iteration
+            attendantName = "";
+            colorGroup1 = "";
+            colorGroup2 = "";
+
+            // Validate care attendant ID based on the user ID 
+            boolean validID
+                    = userID == NOAH_ID
+                    || userID == SILAS_ID
+                    || userID == CHRIS_ID
+                    || userID == MYA_ID;
+
+            // validated care attendant ID 
+            if (validID) {
+
+                // care attendant designated group based on group color 
+                if (userID == NOAH_ID) {
+
+                    attendantName = "Noah Charles";
+                    colorGroup1 = BLUE;
+                    colorGroup2 = RED;
+
+                } else if (userID == SILAS_ID) {
+
+                    attendantName = "Silas Alexander";
+                    colorGroup1 = GREEN;
+                    colorGroup2 = YELLOW;
+
+                } else if (userID == CHRIS_ID) {
+
+                    attendantName = "Chris Isaac";
+                    colorGroup1 = BLUE;
+                    colorGroup2 = YELLOW;
+
+                } else if (userID == MYA_ID) {
+
+                    attendantName = "Mya Lynn";
+                    colorGroup1 = RED;
+                    colorGroup2 = GREEN;
+                }
+
+                System.out.println();
+
+                System.out.println(
+                        "Welcome " + attendantName
+                );
+
+                System.out.println(
+                        "Assigned color groups: "
+                        + colorGroup1
+                        + " and "
+                        + colorGroup2
+                );
+
+                System.out.println();
+
+                // display dogs assinded to attendnt based on ID and group color  
+                if (userID == NOAH_ID) {
+
+                    // Noah = BLUE and RED
+                    System.out.println("Dogs assigned to Noah:");
+                    System.out.println("348 - Badger - RED");
+                    System.out.println("301 - Hoosier - RED");
+                    System.out.println("388 - Husker - RED");
+                    System.out.println("391 - Bucky - RED");
+                    System.out.println("362 - Nittany - BLUE");
+                    System.out.println("311 - Wolvey - BLUE");
+
+                } else if (userID == SILAS_ID) {
+
+                    // Silas = GREEN and YELLOW
+                    System.out.println("Dogs assigned to Silas:");
+                    System.out.println("325 - Spartan - GREEN");
+                    System.out.println("388 - Hawk - YELLOW");
+                    System.out.println("333 - Gopher - YELLOW");
+
+                } else if (userID == CHRIS_ID) {
+
+                    // Chris = BLUE and YELLOW
+                    System.out.println("Dogs assigned to Chris:");
+                    System.out.println("362 - Nittany - BLUE");
+                    System.out.println("311 - Wolvey - BLUE");
+                    System.out.println("388 - Hawk - YELLOW");
+                    System.out.println("333 - Gopher - YELLOW");
+
+                } else if (userID == MYA_ID) {
+
+                    // Mya = RED and GREEN
+                    System.out.println("Dogs assigned to Mya:");
+                    System.out.println("348 - Badger - RED");
+                    System.out.println("301 - Hoosier - RED");
+                    System.out.println("388 - Husker - RED");
+                    System.out.println("391 - Bucky - RED");
+                    System.out.println("325 - Spartan - GREEN");
+                }
+
+                // validate dog id and disply dog name and dog color to track 
+                boolean validDogID = false;
+
+                while (!validDogID) {
+
+                    System.out.println();
+
+                    System.out.print(
+                            attendantName
+                            + ", enter the ID of the dog: "
+                    );
+
+                    dogID = scanner.nextInt();
+
+                    // Reset dog information before checking ID
+                    dogName = "";
+                    dogColor = "";
+
+                    // ---------------------------------------------
+                    // BADGER - RED
+                    // Noah or Mya
+                    // ---------------------------------------------
+                    if (dogID == BADGER_ID
+                            && (userID == NOAH_ID
+                            || userID == MYA_ID)) {
+
+                        dogName = "Badger";
+                        dogColor = RED;
+                        validDogID = true;
+                    } // ---------------------------------------------
+                    // HOOSIER - RED
+                    // Noah or Mya
+                    // ---------------------------------------------
+                    else if (dogID == HOOSIER_ID
+                            && (userID == NOAH_ID
+                            || userID == MYA_ID)) {
+
+                        dogName = "Hoosier";
+                        dogColor = RED;
+                        validDogID = true;
+                    } // ---------------------------------------------
+                    // SPARTAN - GREEN
+                    // Silas or Mya
+                    // ---------------------------------------------
+                    else if (dogID == SPARTAN_ID
+                            && (userID == SILAS_ID
+                            || userID == MYA_ID)) {
+
+                        dogName = "Spartan";
+                        dogColor = GREEN;
+                        validDogID = true;
+                    } // HAWK - YELLOW
+                    // Silas or Chris
+                    else if (dogID == HAWK_ID
+                            && (userID == SILAS_ID
+                            || userID == CHRIS_ID)) {
+
+                        dogName = "Hawk";
+                        dogColor = YELLOW;
+                        validDogID = true;
+                    } // GOPHER - YELLOW
+                    // Silas or Chris
+                    else if (dogID == GOPHER_ID
+                            && (userID == SILAS_ID
+                            || userID == CHRIS_ID)) {
+
+                        dogName = "Gopher";
+                        dogColor = YELLOW;
+                        validDogID = true;
+                    } // HUSKER - RED
+                    // Noah or Mya
+                    else if (dogID == HUSKER_ID
+                            && (userID == NOAH_ID
+                            || userID == MYA_ID)) {
+
+                        dogName = "Husker";
+                        dogColor = RED;
+                        validDogID = true;
+                    } // BUCKY - RED
+                    // Noah or Mya
+                    else if (dogID == BUCKY_ID
+                            && (userID == NOAH_ID
+                            || userID == MYA_ID)) {
+
+                        dogName = "Bucky";
+                        dogColor = RED;
+                        validDogID = true;
+                    } // NITTANY - BLUE
+                    // Noah or Chris
+                    else if (dogID == NITTANY_ID
+                            && (userID == NOAH_ID
+                            || userID == CHRIS_ID)) {
+
+                        dogName = "Nittany";
+                        dogColor = BLUE;
+                        validDogID = true;
+                    } // WOLVEY - BLUE
+                    // Noah or Chris
+                    else if (dogID == WOLVEY_ID
+                            && (userID == NOAH_ID
+                            || userID == CHRIS_ID)) {
+
+                        dogName = "Wolvey";
+                        dogColor = BLUE;
+                        validDogID = true;
+                    } // invalid dog 
+                    else {
+
+                        System.out.println(
+                                "Invalid dog ID for "
+                                + attendantName
+                                + ". Please try again."
+                        );
+                    }
+                }
+                // gather user minutes 
+                System.out.print(
+                        "Enter the total minutes spent with "
+                        + dogName
+                        + ": "
+                );
+
+                dogMinutes = scanner.nextInt();
+
+                // Do not allow negative care minutes only accept real positive numbers defensive programming 
+                while (dogMinutes < 0) {
+
+                    System.out.println(
+                            "Minutes cannot be negative."
+                    );
+
+                    System.out.print(
+                            "Please enter the minutes again: "
+                    );
+
+                    dogMinutes = scanner.nextInt();
+                }
+
+                // gather dog notes 
+                scanner.nextLine();
+
+                System.out.print(
+                        "Enter a general note about "
+                        + dogName
+                        + "'s day: "
+                );
+
+                notesTaken = scanner.nextLine();
+
+                // increase number of logs 
+                // for each log used a new log will be given for better tracking 
+                //avoiding to see the same notes as before 
+                totalDogs++;
+
+                // keep track of count in minutes and dog color for log off summary 
+                if (dogColor.equals(RED)) {
+
+                    redCount++;
+                    redMinutes = redMinutes + dogMinutes;
+
+                } else if (dogColor.equals(BLUE)) {
+
+                    blueCount++;
+                    blueMinutes = blueMinutes + dogMinutes;
+
+                } else if (dogColor.equals(GREEN)) {
+
+                    greenCount++;
+                    greenMinutes = greenMinutes + dogMinutes;
+
+                } else if (dogColor.equals(YELLOW)) {
+
+                    yellowCount++;
+                    yellowMinutes = yellowMinutes + dogMinutes;
+                }
+
+                // each dog will get there own designed time and designated minutes based on input from attendated than added 
+                if (dogName.equals("Badger")) {
+
+                    badgerMinutes
+                            = badgerMinutes + dogMinutes;
+
+                    currentDogTotalMinutes
+                            = badgerMinutes;
+
+                } else if (dogName.equals("Hoosier")) {
+
+                    hoosierMinutes
+                            = hoosierMinutes + dogMinutes;
+
+                    currentDogTotalMinutes
+                            = hoosierMinutes;
+
+                } else if (dogName.equals("Spartan")) {
+
+                    spartanMinutes
+                            = spartanMinutes + dogMinutes;
+
+                    currentDogTotalMinutes
+                            = spartanMinutes;
+
+                } else if (dogName.equals("Hawk")) {
+
+                    hawkMinutes
+                            = hawkMinutes + dogMinutes;
+
+                    currentDogTotalMinutes
+                            = hawkMinutes;
+
+                } else if (dogName.equals("Gopher")) {
+
+                    gopherMinutes
+                            = gopherMinutes + dogMinutes;
+
+                    currentDogTotalMinutes
+                            = gopherMinutes;
+
+                } else if (dogName.equals("Husker")) {
+
+                    huskerMinutes
+                            = huskerMinutes + dogMinutes;
+
+                    currentDogTotalMinutes
+                            = huskerMinutes;
+
+                } else if (dogName.equals("Bucky")) {
+
+                    buckyMinutes
+                            = buckyMinutes + dogMinutes;
+
+                    currentDogTotalMinutes
+                            = buckyMinutes;
+
+                } else if (dogName.equals("Nittany")) {
+
+                    nittanyMinutes
+                            = nittanyMinutes + dogMinutes;
+
+                    currentDogTotalMinutes
+                            = nittanyMinutes;
+
+                } else if (dogName.equals("Wolvey")) {
+
+                    wolveyMinutes
+                            = wolveyMinutes + dogMinutes;
+
+                    currentDogTotalMinutes
+                            = wolveyMinutes;
+                }
+
+                //check witch dog was mostly taken care by minutes 
+                // display dogName of most taken care and the end               
+                if (currentDogTotalMinutes > mostCareMinutes) {
+
+                    mostCareMinutes
+                            = currentDogTotalMinutes;
+
+                    mostCareDog
+                            = dogName;
+                }
+
+                // OUTPUT DOG LOG SUMMARY
+                System.out.println();
+
+                System.out.println("*".repeat(50));
+
+                System.out.println(
+                        "DOG LOG SUMMARY"
+                );
+
+                System.out.println("*".repeat(50));
+
+                System.out.println(
+                        "Care Attendant ID: " + userID
+                );
+
+                System.out.println(
+                        "Care Attendant: " + attendantName
+                );
+
+                System.out.println(
+                        "Dog ID: " + dogID
+                );
+
+                System.out.println(
+                        "Dog Name: " + dogName
+                );
+
+                System.out.println(
+                        "Dog Color Group: " + dogColor
+                );
+
+                System.out.println(
+                        "Minutes Spent With Dog: "
+                        + dogMinutes
+                );
+
+                System.out.println(
+                        "Dog Notes: " + notesTaken
+                );
+
+                System.out.println("*".repeat(50));
+
+                System.out.println();
+            } // =====================================================
+            // INVALID CARE ATTENDANT ID
+            // =====================================================
+            else {
+
+                System.out.println();
+
+                System.out.println(
+                        "Invalid care attendant ID."
+                );
+
+                System.out.println(
+                        "Please enter 11, 22, 33, 44, "
+                        + "or 0 to finish."
+                );
+
+                System.out.println();
+            }
+
+            // new prompt once out of the loop 
+            // Ask for another attendant ID.
+            System.out.print(
+                    "Enter another care attendant ID "
+                    + "or 0 to finish: "
+            );
+
+            userID = scanner.nextInt();
+        }
+
+        // =========================================================
+        // FINAL SUMMARY
+        // This happens when user enters sentinel value 0.
+        // =========================================================
+        System.out.println();
+
+        System.out.println();
+        System.out.println("*".repeat(50));
+        System.out.println(
+                "MPLS CARE ATTENDANT FINAL DAILY SUMMARY"
+        );
+
+        System.out.println("*".repeat(50));
+
+        // Total number of dog logs
+        System.out.println(
+                "Total number of dogs entered: "
+                + totalDogs
+        );
+
+        System.out.println();
+
+        // RED totals
+        System.out.println(
+                "RED dog entries: "
+                + redCount
+        );
+
+        System.out.println(
+                "Total RED care minutes: "
+                + redMinutes
+        );
+
+        System.out.println();
+
+        // BLUE totals
+        System.out.println(
+                "BLUE dog entries: "
+                + blueCount
+        );
+
+        System.out.println(
+                "Total BLUE care minutes: "
+                + blueMinutes
+        );
+
+        System.out.println();
+
+        // GREEN totals
+        System.out.println(
+                "GREEN dog entries: "
+                + greenCount
+        );
+
+        System.out.println(
+                "Total GREEN care minutes: "
+                + greenMinutes
+        );
+
+        System.out.println();
+
+        // YELLOW totals
+        System.out.println(
+                "YELLOW dog entries: "
+                + yellowCount
+        );
+
+        System.out.println(
+                "Total YELLOW care minutes: "
+                + yellowMinutes
+        );
+
+        System.out.println();
+
+        // DOG WITH MOST CARE MINUTES
+        if (totalDogs > 0) {
+
+            System.out.println(
+                    "Dog with the most care minutes: "
+                    + mostCareDog
+            );
+
+            System.out.println(
+                    "Total care minutes for "
+                    + mostCareDog
+                    + ": "
+                    + mostCareMinutes
+            );
+
+        } else {
+
+            System.out.println(
+                    "No dog logs were entered."
+            );
+        }
+
+        System.out.println("*".repeat(50));
+
+        System.out.println(
+                "Thank you for using the MPLS Daily Log Program."
+        );
+
+        // Close Scanner
+        scanner.close();
+    }
+}
